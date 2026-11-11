@@ -1,4 +1,4 @@
-import pg from 'pg';
+import pg from "pg";
 
 const { Pool } = pg;
 // PostgreSQL DATE values are calendar dates, not timestamps. Keep them as
@@ -7,20 +7,20 @@ pg.types.setTypeParser(1082, (value) => value);
 const connection = process.env.DATABASE_URL
   ? { connectionString: process.env.DATABASE_URL }
   : {
-      host: process.env.DB_HOST || 'localhost',
+      host: process.env.DB_HOST || "localhost",
       port: Number(process.env.DB_PORT) || 5432,
-      database: process.env.DB_NAME || 'sweety',
-      user: process.env.DB_USER || 'postgres',
+      database: process.env.DB_NAME || "sweety",
+      user: process.env.DB_USER || "postgres",
       password: process.env.DB_PASSWORD,
     };
 
 export const pool = new Pool({
   ...connection,
-  ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
+  ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : undefined,
 });
 
-pool.on('error', (error) => {
-  console.error('Unexpected PostgreSQL pool error:', error);
+pool.on("error", (error) => {
+  console.error("Unexpected PostgreSQL pool error:", error);
 });
 
 export async function query(text, params) {

@@ -1,4 +1,4 @@
-import * as service from '../services/readingService.js';
+import * as service from "../services/readingService.js";
 
 export async function list(req, res) {
   res.json(await service.listReadings(req.user.id, req.query));

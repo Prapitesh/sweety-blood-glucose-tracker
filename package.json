@@ -2,11 +2,28 @@
   "name": "sweety-blood-glucose-tracker",
   "version": "1.0.0",
   "private": true,
-  "workspaces": ["server", "client"],
+  "type": "module",
+  "workspaces": [
+    "server",
+    "client"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
     "test": "npm test -w server && npm test -w client",
+    "lint": "eslint \"server/src/**/*.js\" \"server/scripts/**/*.js\" \"client/src/**/*.{js,jsx}\" client/vite.config.js eslint.config.js",
+    "lint:fix": "eslint \"server/src/**/*.js\" \"server/scripts/**/*.js\" \"client/src/**/*.{js,jsx}\" client/vite.config.js eslint.config.js --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "seed": "npm run seed -w server"
   },
-  "devDependencies": { "concurrently": "^9.1.2" }
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "concurrently": "^9.1.2",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10"
+  }
 }

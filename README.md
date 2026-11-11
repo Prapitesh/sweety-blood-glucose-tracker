@@ -30,9 +30,11 @@ A full-stack blood glucose tracking application built for the Kenpath Junior Ful
 ## Screenshots
 
 ### Desktop dashboard
+
 ![Sweety dashboard on desktop](screenshots/dashboard-desktop.png)
 
 ### Mobile dashboard
+
 ![Sweety dashboard on mobile](screenshots/dashboard-mobile.png)
 
 ## Prerequisites
@@ -71,17 +73,17 @@ The frontend is available at http://localhost:5173 and the API at http://localho
 
 ### Environment variables
 
-| Variable | Purpose |
-|---|---|
-| `PORT` | API port (default 5000) |
-| `CLIENT_ORIGIN` | Allowed frontend origin |
-| `DB_HOST`, `DB_PORT` | PostgreSQL host and port |
-| `DB_NAME`, `DB_USER`, `DB_PASSWORD` | PostgreSQL database credentials |
-| `JWT_SECRET` | Secret used to sign and verify JWTs |
-| `JWT_EXPIRES_IN` | Token lifetime (default 1d) |
-| `BCRYPT_ROUNDS` | Password hashing cost (clamped to 10-14) |
-| `DEMO_EMAIL`, `DEMO_PASSWORD` | Credentials used by the local seed script |
-| `VITE_API_URL` | Frontend API base URL |
+| Variable                            | Purpose                                   |
+| ----------------------------------- | ----------------------------------------- |
+| `PORT`                              | API port (default 5000)                   |
+| `CLIENT_ORIGIN`                     | Allowed frontend origin                   |
+| `DB_HOST`, `DB_PORT`                | PostgreSQL host and port                  |
+| `DB_NAME`, `DB_USER`, `DB_PASSWORD` | PostgreSQL database credentials           |
+| `JWT_SECRET`                        | Secret used to sign and verify JWTs       |
+| `JWT_EXPIRES_IN`                    | Token lifetime (default 1d)               |
+| `BCRYPT_ROUNDS`                     | Password hashing cost (clamped to 10-14)  |
+| `DEMO_EMAIL`, `DEMO_PASSWORD`       | Credentials used by the local seed script |
+| `VITE_API_URL`                      | Frontend API base URL                     |
 
 Never commit the root `.env` file. Use `.env.example` as the safe template.
 
@@ -93,21 +95,27 @@ Run from the repository root:
 - `npm test` - run backend and frontend test suites.
 - `npm run seed` - create or refresh the local demo account and sample readings.
 - `npm run build -w client` - create the frontend production build.
+- `npm run lint` - run ESLint across backend and frontend source.
+- `npm run lint:fix` - automatically fix supported ESLint issues.
+- `npm run format` - format supported project files with Prettier.
+- `npm run format:check` - verify formatting without changing files.
+
+ESLint uses a flat configuration with Node.js rules for the Express backend and browser/React Hooks rules for the frontend. Prettier enforces shared formatting defaults across the project. Both tools are installed as root development dependencies so the same commands work across both workspaces.
 
 ## API
 
 All reading endpoints require `Authorization: Bearer <token>`.
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/health` | API health check |
-| POST | `/api/auth/register` | Register an account |
-| POST | `/api/auth/login` | Authenticate and receive a JWT |
-| GET | `/api/readings?page=1&limit=20` | List the authenticated user's readings |
-| POST | `/api/readings` | Create a reading |
-| PUT | `/api/readings/:id` | Update a reading |
-| DELETE | `/api/readings/:id` | Delete a reading |
-| GET | `/api/readings/reports?date=YYYY-MM-DD` | Daily, monthly, previous-month, and trend data |
+| Method | Endpoint                                | Description                                    |
+| ------ | --------------------------------------- | ---------------------------------------------- |
+| GET    | `/api/health`                           | API health check                               |
+| POST   | `/api/auth/register`                    | Register an account                            |
+| POST   | `/api/auth/login`                       | Authenticate and receive a JWT                 |
+| GET    | `/api/readings?page=1&limit=20`         | List the authenticated user's readings         |
+| POST   | `/api/readings`                         | Create a reading                               |
+| PUT    | `/api/readings/:id`                     | Update a reading                               |
+| DELETE | `/api/readings/:id`                     | Delete a reading                               |
+| GET    | `/api/readings/reports?date=YYYY-MM-DD` | Daily, monthly, previous-month, and trend data |
 
 Reading records are always scoped to the authenticated user. The API never accepts a user ID from the client for reading ownership.
 

@@ -1,0 +1,12 @@
+{
+  "name": "sweety-blood-glucose-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["server", "client"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
+    "test": "npm test -w server && npm test -w client",
+    "seed": "npm run seed -w server"
+  },
+  "devDependencies": { "concurrently": "^9.1.2" }
+}

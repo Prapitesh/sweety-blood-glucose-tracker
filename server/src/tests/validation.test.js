@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateReading} from '../utils/validation.js';
+const d=new Date();const date=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+const valid={date,slot:'morning',value:100};
+test('accepts a valid reading',()=>assert.equal(validateReading(valid),100));
+test('requires a value',()=>assert.throws(()=>validateReading({...valid,value:''}),/Please enter a glucose value/));
+test('rejects values outside range and decimals',()=>{for(const value of [39,601,1.5,'abc'])assert.throws(()=>validateReading({...valid,value}),/between 40 and 600/)});
+test('rejects future dates',()=>{const x=new Date();x.setDate(x.getDate()+1);const future=[x.getFullYear(),String(x.getMonth()+1).padStart(2,'0'),String(x.getDate()).padStart(2,'0')].join('-');assert.throws(()=>validateReading({...valid,date:future}),/Date cannot be in the future/)});
+test('rejects invalid slots',()=>assert.throws(()=>validateReading({...valid,slot:'night'}),/valid time slot/));

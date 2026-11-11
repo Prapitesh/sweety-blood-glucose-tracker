@@ -7,7 +7,7 @@ try{
  if(!password||password.length<8)throw new Error('Set DEMO_PASSWORD (at least 8 characters) in .env before seeding.');
  await initializeDatabase();
  const hash=await bcrypt.hash(password,12);
- const result=await query('INSERT INTO users(name,email,password_hash) VALUES($1,$2,$3) ON CONFLICT(email) DO UPDATE SET name=EXCLUDED.name RETURNING id',['Sweety Demo',email,hash]);
+ const result=await query('INSERT INTO users(name,email,password_hash) VALUES($1,$2,$3) ON CONFLICT(email) DO UPDATE SET name=EXCLUDED.name,password_hash=EXCLUDED.password_hash RETURNING id',['Sweety Demo',email,hash]);
  const id=result.rows[0].id;
  await query('DELETE FROM readings WHERE user_id=$1',[id]);
  const now=new Date();
